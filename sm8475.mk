@@ -408,6 +408,9 @@ PRODUCT_COPY_FILES += \
 # Preopt SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += SystemUI
 
+# Preopt SystemUI
+PRODUCT_DEXPREOPT_SPEED_APPS += SystemUIGoogle
+
 # QMI
 PRODUCT_PACKAGES += \
     libjson \
