@@ -121,16 +121,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/card-defs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/card-defs.xml
 
-# Audio - SoundFX
-PRODUCT_PACKAGES += \
-    libaudiopreprocessing \
-    libbundlewrapper \
-    libdynproc \
-    libeffectproxy \
-    libhapticgenerator \
-    libldnhncr \
-    libreverbwrapper \
-    libvisualizer
+# AudioFX-Viper4Android-RE
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/ViperFX/audio_effects.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_effects.xml \
+    $(LOCAL_PATH)/prebuilt/lib/soundfx/libv4a_re.so:$(TARGET_COPY_OUT_VENDOR)/lib/soundfx/libv4a_re.so \
+    $(LOCAL_PATH)/prebuilt/lib64/soundfx/libv4a_re.so:$(TARGET_COPY_OUT_VENDOR)/lib64/soundfx/libv4a_re.so
 
 # Authsecret
 PRODUCT_PACKAGES += \
