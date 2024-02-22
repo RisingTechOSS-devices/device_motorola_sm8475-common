@@ -189,9 +189,33 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_PACKAGES += \
-    android.hardware.gnss-V1-ndk.vendor \
-    android.hardware.gnss@2.1.vendor \
-    android.hardware.power@1.2.vendor
+    android.hardware.gnss@2.1-impl-qti \
+    android.hardware.gnss-aidl-impl-qti \
+    android.hardware.gnss-aidl-service-qti \
+    gnss@2.0-base.policy \
+    gnss@2.0-xtra-daemon.policy \
+    gnss@2.0-xtwifi-client.policy \
+    gnss@2.0-xtwifi-inet-agent.policy \
+    libloc_pla_headers \
+    liblocation_api_headers \
+    libgps.utils_headers \
+    liblocation_api \
+    libgps.utils \
+    libbatching \
+    libgeofencing \
+    libloc_core \
+    libgnss \
+    libgnsspps
+
+PRODUCT_PACKAGES += \
+    apdr.conf \
+    batching.conf \
+    gnss_antenna_info.conf \
+    gps.conf \
+    izat.conf \
+    lowi.conf \
+    sap.conf \
+    xtwifi.conf
 
 # Health
 PRODUCT_PACKAGES += \
