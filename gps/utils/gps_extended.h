@@ -257,30 +257,23 @@ typedef struct {
     /**<   Epi validity >*/
 
     float epiLat;
-    /**<   EPI Latitude. - Units: Radians
-        valid if 0th bit set in epiValidity*/
+    /**<   EPI Latitude. - Units: Radians */
 
     float epiLon;
-    /**<   EPI Longitude. - Units: Radians
-        valid if 0th bit set in epiValidity*/
+    /**<   EPI Longitude. - Units: Radians */
 
     float epiAlt;
-    /**<   EPI Altitude. - Units: Meters
-        valid if 1st bit set in epiValidity*/
+    /**<   EPI Altitude. - Units: Meters */
 
     float epiHepe;
     /**<   EPI Horizontal Estimated Position Error.
-      - Units: Meters
-        valid if 0th bit set in epiValidity*/
-
+      - Units: Meters */
     float epiAltUnc;
     /**<   EPI Altitude Uncertainty.
-      - Units: Meters
-        valid if 1st bit set in epiValidity*/
+      - Units: Meters */
 
     uint8_t epiSrc;
-    /**<   EPI Source
-        valid if 2nd bit set in epiValidity*/
+    /**<   EPI Source*/
 
     GnssTimeInfo bestPosTime;
     /**<   UTC Time associated with Best Position. */
