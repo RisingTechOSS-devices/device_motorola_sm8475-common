@@ -142,7 +142,8 @@ PRODUCT_PACKAGES += \
     libcamera2ndk_vendor \
     libgui_vendor \
     vendor.qti.hardware.camera.postproc@1.0.vendor \
-    vendor.qti.hardware.camera.aon@1.0.vendor
+    vendor.qti.hardware.camera.aon@1.0.vendor \
+    libyuv.vendor
 
 # Charger
 WITH_LINEAGE_CHARGER := false
@@ -399,6 +400,13 @@ PRODUCT_COPY_FILES += \
 # Perf
 PRODUCT_PACKAGES += \
     libqti-perfd-client
+
+# Perf
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.perf@2.3.vendor \
+    vendor.qti.hardware.perf@2.0.vendor \
+    vendor.qti.hardware.perf@2.2.vendor \
+    vendor.qti.hardware.perf@2.1.vendor
 
 # Power
 $(call inherit-product, hardware/motorola/power-libperfmgr/aidl/device.mk)
