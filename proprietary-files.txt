@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-# All unpinned blobs below are extracted from 14-U1SQ34M.52-21-1 cfdfb release-keys.
-=======
 # All unpinned blobs below are extracted from 14-U1SQS34.52-21-1-7 05c162-3a3ec6 release-keys.
->>>>>>> 5d8e8c2 (sm8475-common: update to U1SQS34.52-21-1-7 05c162-3a3ec6)
+
 
 # ADSP
 vendor/bin/adsprpcd
