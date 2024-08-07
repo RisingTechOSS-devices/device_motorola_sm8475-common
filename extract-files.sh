@@ -25,7 +25,6 @@ source "${HELPER}"
 CLEAN_VENDOR=true
 
 ONLY_COMMON=
-ONLY_FIRMWARE=
 ONLY_TARGET=
 KANG=
 SECTION=
@@ -34,9 +33,6 @@ while [ "${#}" -gt 0 ]; do
     case "${1}" in
         --only-common )
                 ONLY_COMMON=true
-                ;;
-        --only-firmware )
-                ONLY_FIRMWARE=true
                 ;;
         --only-target )
                 ONLY_TARGET=true
@@ -67,11 +63,11 @@ function blob_fixup() {
         system_ext/etc/permissions/moto-telephony.xml)
             sed -i "s#/system/#/system_ext/#" "${2}"
             ;;
-        vendor/etc/media_cape/video_system_specs.json)
-            sed -i "/max_retry_alloc_output_timeout/ s/2000/0/" "${2}"
-            ;;
         vendor/etc/vintf/manifest/vendor.dolby.media.c2@1.0-service.xml)
             sed -ni '/default1/!p' "${2}"
+            ;;
+        vendor/lib/libcamximageformatutils.so)
+            ${PATCHELF} --replace-needed "vendor.qti.hardware.display.config-V2-ndk_platform.so" "vendor.qti.hardware.display.config-V2-ndk.so" "${2}"
             ;;
         vendor/lib64/libcamximageformatutils.so)
             ${PATCHELF} --replace-needed "vendor.qti.hardware.display.config-V2-ndk_platform.so" "vendor.qti.hardware.display.config-V2-ndk.so" "${2}"
@@ -91,7 +87,9 @@ function blob_fixup() {
             ${PATCHELF} --replace-needed "android.hardware.security.keymint-V1-ndk_platform.so" "android.hardware.security.keymint-V1-ndk.so" "${2}"
             ${PATCHELF} --replace-needed "android.hardware.security.secureclock-V1-ndk_platform.so" "android.hardware.security.secureclock-V1-ndk.so" "${2}"
             ${PATCHELF} --replace-needed "android.hardware.security.sharedsecret-V1-ndk_platform.so" "android.hardware.security.sharedsecret-V1-ndk.so" "${2}"
-            ${PATCHELF} --add-needed "android.hardware.security.rkp-V1-ndk.so" "${2}"
+            ;;
+        vendor/lib64/libdlbdsservice.so | vendor/lib64/soundfx/libswdap.so)
+            "${PATCHELF}" --replace-needed "libstagefright_foundation.so" "libstagefright_foundation-v33.so" "${2}"
             ;;
         vendor/lib64/vendor.qti.hardware.qxr-V1-ndk_platform.so)
             ${PATCHELF} --replace-needed "android.hardware.common-V2-ndk_platform.so" "android.hardware.common-V2-ndk.so" "${2}"
@@ -100,36 +98,16 @@ function blob_fixup() {
             sed -i "s#build_codename -le \"12\"#build_codename -le \"13\"#" "${2}"
             ;;
         # rename moto modified primary audio to not conflict with source built
-        vendor/lib64/hw/audio.primary.taro-moto.so)
+        vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
             "${PATCHELF}" --set-soname audio.primary.taro-moto.so "${2}"
             ;;
-        vendor/lib64/vendor.qti.gnss-service.so)
-            "${PATCHELF}" --replace-needed "android.hardware.gnss-V1-ndk_platform.so" "android.hardware.gnss-V1-ndk.so" "${2}"
-            ;;
-        vendor/lib64/libdlbdsservice.so | vendor/lib64/soundfx/libswdap.so)
-            "${PATCHELF}" --replace-needed "libstagefright_foundation.so" "libstagefright_foundation-v33.so" "${2}"
-            ;;
-        vendor/lib64/sensors.moto.so)
-            "${PATCHELF}" --replace-needed "libutils.so" "libutils-v33.so" "${2}"
+        system_ext/priv-app/ims/ims.apk)
+            apktool_patch "${2}" "$MY_DIR/ims-patches"
             ;;
     esac
 }
 
-function prepare_firmware() {
-    if [ "${SRC}" != "adb" ]; then
-        local STAR="${ANDROID_ROOT}"/lineage/scripts/motorola/star.sh
-        for IMAGE in bootloader radio; do
-            if [ -f "${SRC}/${IMAGE}.img" ]; then
-                echo "Extracting Motorola star image ${SRC}/${IMAGE}.img"
-                sh "${STAR}" "${SRC}/${IMAGE}.img" "${SRC}"
-            fi
-        done
-        local INFO="${ANDROID_ROOT}"/lineage/scripts/motorola/info.sh
-        ./${INFO} "${SRC}"
-    fi
-}
-
-if [ -z "${ONLY_FIRMWARE}" ] && [ -z "${ONLY_TARGET}" ]; then
+if [ -z "${ONLY_TARGET}" ]; then
     # Initialize the helper for common device
     setup_vendor "${DEVICE_COMMON}" "${VENDOR_COMMON:-$VENDOR}" "${ANDROID_ROOT}" true "${CLEAN_VENDOR}"
 
@@ -141,18 +119,7 @@ if [ -z "${ONLY_COMMON}" ] && [ -s "${MY_DIR}/../../${VENDOR}/${DEVICE}/propriet
     source "${MY_DIR}/../../${VENDOR}/${DEVICE}/extract-files.sh"
     setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
 
-    if [ -z "${ONLY_FIRMWARE}" ]; then
-        extract "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
-    fi
-
-    if [ -a "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-files-carriersettings.txt" ]; then
-        extract "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-files-carriersettings.txt" "${SRC}" "${KANG}" --section "${SECTION}"
-        extract_carriersettings
-    fi
-
-    if [ -z "${SECTION}" ] && [ -f "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-firmware.txt" ]; then
-        extract_firmware "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-firmware.txt" "${SRC}"
-    fi
+    extract "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
 fi
 
 "${MY_DIR}/setup-makefiles.sh"
