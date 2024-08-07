@@ -228,23 +228,21 @@ SysfsPollingOneShotSensor::SysfsPollingOneShotSensor(
 
     mEnableStream.open(enablePath);
 
+    if (!mEnableStream) {
+        throw std::runtime_error("Failed to open enable path " + enablePath);
+    }
+
     int rc;
 
     rc = pipe(mWaitPipeFd);
     if (rc < 0) {
-        mWaitPipeFd[0] = -1;
-        mWaitPipeFd[1] = -1;
-        ALOGE("failed to open wait pipe: %d", rc);
+        throw std::runtime_error("Failed to open wait pipe: " + std::to_string(rc));
     }
 
     mPollFd = open(pollPath.c_str(), O_RDONLY);
     if (mPollFd < 0) {
-        ALOGE("failed to open poll fd: %d", mPollFd);
-    }
-
-    if (mWaitPipeFd[0] < 0 || mWaitPipeFd[1] < 0 || mPollFd < 0) {
-        mStopThread = true;
-        return;
+        throw std::runtime_error("Failed to open poll path " + pollPath + ": " +
+                                 std::to_string(mPollFd));
     }
 
     mPolls[0] = {

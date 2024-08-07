@@ -70,10 +70,13 @@ class SensorsSubHal : public ISensorsSubHal, public ISensorsEventCallback {
 
   protected:
     template <class SensorType>
-    void AddSensor() {
+    void AddSensor() try {
         std::shared_ptr<SensorType> sensor =
-            std::make_shared<SensorType>(mNextHandle++ /* sensorHandle */, this /* callback */);
+            std::make_shared<SensorType>(mNextHandle /* sensorHandle */, this /* callback */);
         mSensors[sensor->getSensorInfo().sensorHandle] = sensor;
+        mNextHandle++;
+    } catch (const std::exception& e) {
+      ALOGE("Failed to add sensor: %s", e.what());
     }
 
     std::map<int32_t, std::shared_ptr<Sensor>> mSensors;
