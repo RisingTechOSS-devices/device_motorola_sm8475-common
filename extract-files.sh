@@ -90,6 +90,9 @@ function blob_fixup() {
         vendor/lib64/nfc_nci.nqx.default.hw.so)
             ${PATCHELF} --replace-needed "libbase.so" "libbase-v33.so" "${2}"
             ;;
+	vendor/lib64/libcodec2_soft_ddpdec.so)
+            ${PATCHELF} --replace-needed  "libcodec2_soft_common.so" "libcodec2_soft_common_prebuilt.so" "${2}"
+	    ;;
         vendor/lib64/libancbase_rt_fusion.so)
             ${PATCHELF} --set-soname libancbase_rt_fusion.so "${2}"
             ;;
