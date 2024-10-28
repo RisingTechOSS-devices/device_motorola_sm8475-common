@@ -408,6 +408,13 @@ PRODUCT_DEXPREOPT_SPEED_APPS += SystemUI
 PRODUCT_PACKAGES += \
     vendor.lineage.powershare@1.0-service.moto_sm8475
 
+# Perf
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.perf@2.3.vendor \
+    vendor.qti.hardware.perf@2.0.vendor \
+    vendor.qti.hardware.perf@2.2.vendor \
+    vendor.qti.hardware.perf@2.1.vendor
+
 # QMI
 PRODUCT_PACKAGES += \
     libjson \
