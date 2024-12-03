@@ -16,6 +16,7 @@
 
 PRODUCT_BUILD_SUPER_PARTITION := false
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
+BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 
 # Enable project quotas and casefolding for emulated storage without sdcardfs
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
@@ -105,7 +106,16 @@ PRODUCT_PACKAGES += \
     audio.primary.default \
     libfmpal \
     libhfp_pal \
-    libbatterylistener
+    libbatterylistener \
+    vendor.qti.hardware.pal@1.0.vendor \
+    vendor.qti.hardware.AGMIPC@1.0
+
+# Shims
+PRODUCT_PACKAGES += \
+    libshim_ui \
+    libcodec2_shim \
+    libhidlbase_shim
+
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration_7_0.xml \
@@ -465,7 +475,8 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     vendor/qcom/opensource/data-ipa-cfg-mgr \
     hardware/qcom-caf/sm8450/display \
-    hardware/qcom-caf/wlan
+    hardware/qcom-caf/wlan \
+    hardware/qcom-caf/sm8450/audio/agm/ipc/HwBinders/interfaces
 
 # Service Tracker
 PRODUCT_PACKAGES += \
@@ -504,7 +515,10 @@ PRODUCT_COPY_FILES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal-service.qti
+    android.hardware.thermal-service.qti \
+    android.hardware.thermal@1.0.vendor \
+    android.hardware.thermal@2.0.vendor \
+    android.hardware.thermal@2.0
 
 # Touch
 PRODUCT_PACKAGES += \
