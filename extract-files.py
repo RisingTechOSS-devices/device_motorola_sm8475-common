@@ -97,6 +97,14 @@ blob_fixups: blob_fixups_user_type = {
         'libcodec2_soft_common.so',
 	'libcodec2_soft_common_prebuilt.so',
     ),
+    'vendor/lib64/libdlbdsservice.so': blob_fixup().replace_needed(
+        'libstagefright_foundation.so',
+        'libstagefright_foundation-v33.so',
+    ),
+    'vendor/lib64/soundfx/libswdap.so': blob_fixup().replace_needed(
+        'libstagefright_foundation.so',
+        'libstagefright_foundation-v33.so',
+    ),
     'vendor/etc/seccomp_policy/atfwd@2.0.policy': blob_fixup()
         .add_line_if_missing('gettid: 1'),
     (
