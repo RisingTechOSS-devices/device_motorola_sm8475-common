@@ -29,3 +29,6 @@ vendor.ese.                                    u:object_r:vendor_secure_element_
 
 # Power
 vendor.powerhal. u:object_r:vendor_power_prop:s0
+
+# Thermal Engine
+vendor.thermal.            u:object_r:vendor_thermal_prop:s0
