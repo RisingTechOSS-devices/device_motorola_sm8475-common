@@ -130,12 +130,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/card-defs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/card-defs.xml
 
-# AudioFX-Viper4Android-RE
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/ViperFX/audio_effects.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_effects.xml \
-    $(LOCAL_PATH)/prebuilt/lib/soundfx/libv4a_re.so:$(TARGET_COPY_OUT_VENDOR)/lib/soundfx/libv4a_re.so \
-    $(LOCAL_PATH)/prebuilt/lib64/soundfx/libv4a_re.so:$(TARGET_COPY_OUT_VENDOR)/lib64/soundfx/libv4a_re.so
-
 # Authsecret
 PRODUCT_PACKAGES += \
     android.hardware.authsecret@1.0.vendor
@@ -592,6 +586,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/vendor_cmd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/vendor_cmd.xml
 
 PRODUCT_VENDOR_MOVE_ENABLED := true
+
+# Include V4a from hardware/motorola
+$(call inherit-product, hardware/motorola/ViPER4AndroidFX/setup.mk)
 
 # Inherit from vendor blobs
 $(call inherit-product, vendor/motorola/sm8475-common/sm8475-common-vendor.mk)
