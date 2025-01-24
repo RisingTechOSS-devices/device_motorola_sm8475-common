@@ -38,7 +38,7 @@
         "remote":       "rising",
         "repository":   "hardware_qcom-caf_sm8450_display",
         "target_path":  "hardware/qcom-caf/sm8450/display",
-        "revision":     "fifteen-eqs"
+        "revision":     "fifteen-eqs",
         "override": {
             "repo": "LineageOS/android_hardware_qcom_display",
             "path": "hardware/qcom-caf/sm8450/display"
@@ -48,7 +48,7 @@
         "remote":       "rising",
         "repository":   "hardware_qcom_audio-ar",
         "target_path":  "hardware/qcom-caf/sm8450/audio/primary-hal",
-        "revision":     "fifteen-Pong"
+        "revision":     "fifteen-Pong",
         "override": {
             "repo": "LineageOS/android_hardware_qcom_audio-ar",
             "path": "hardware/qcom-caf/sm8450/audio/primary-hal"
@@ -58,7 +58,7 @@
         "remote":       "rising",
         "repository":   "vendor_qcom_opensource_arpal-lx",
         "target_path":  "hardware/qcom-caf/sm8450/audio/pal",
-        "revision":     "fifteen-eqs"
+        "revision":     "fifteen-eqs",
         "override": {
             "repo": "LineageOS/android_vendor_qcom_opensource_arpal-lx",
             "path": "hardware/qcom-caf/sm8450/audio/pal"
@@ -68,7 +68,7 @@
         "remote":       "rising",
         "repository":   "hardware_qcom-caf_sm8450_audio_agm",
         "target_path":  "hardware/qcom-caf/sm8450/audio/agm",
-        "revision":     "fifteen-eqs"
+        "revision":     "fifteen-eqs",
         "override": {
             "repo": "LineageOS/android_vendor_qcom_opensource_agm",
             "path": "hardware/qcom-caf/sm8450/audio/agm"
